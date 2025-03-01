@@ -6,4 +6,32 @@
         <title>Search Dogs</title>
         <link rel="stylesheet" href="styles.css">
     </head>
+    <body>
+        <div class="search-container">
+            <h1 class="Find Your Perfect Dog"></h1>
+            <div class="filter">
+                <label for="breed-filter">Filter by Breed:</label>
+                <select id="breed-filter">
+                    <option value="" >All Breeds</option>
+                    <!-- Breeds will be dynamically populated-->
+                </select>
+
+                <label for="sort">Sort by:</label>
+                <select id="sort">
+                <option value="breed:asc">Breed (A-Z)</option>
+                <option value="breed:desc">Breed (Z-A)</option>
+                </select>
+            </div>
+            <div id="dog-list" class="dog-list">
+                <!-- The dog cared will eb dynamically populated-->
+            </div>
+
+            <div class="pagination">
+                <button id="prev-page" disabled>Previous</button>
+                <span id="page-info">Page 1</span>
+                <button id="next-page" disabled>Next</button>
+            </div>
+        </div>
+        <script src="search.js"></script>
+    </body>
 </html>
