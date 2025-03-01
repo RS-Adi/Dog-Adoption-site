@@ -1,7 +1,7 @@
 document.getElementById('login-form').addEventListener('submit', async(e) =>{
     e.preventDefault(); //This prevent the form from submitting in traditional ways
 
-    //First get theuser input
+    //First get the user input
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
 
@@ -17,7 +17,7 @@ document.getElementById('login-form').addEventListener('submit', async(e) =>{
                 credentials: 'include', //This includes cookies
             });
             if (response.ok) {
-                //Takes to search page after it is successfull
+                //Takes to search page after it is successful
                 window.location.href = 'search.html'; 
             }else{
                 //Display error
@@ -25,6 +25,6 @@ document.getElementById('login-form').addEventListener('submit', async(e) =>{
             }
     }catch(error){
         console.error('Error during login:', error);
-        document.getElementById('error-message').textContent = 'An error occured. Please try again after checking your details'
+        document.getElementById('error-message').textContent = 'An error occurred. Please try again after checking your details'
     }
 });
