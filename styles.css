@@ -65,3 +65,29 @@ button:hover{
     padding: 5px;
     margin-right: 20px;
 }
+.dog-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+.dog-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+}
+.dog-card img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+.pagination button {
+    padding: 5px 10px;
+    margin: 0 10px;
+    cursor: pointer;
+}
