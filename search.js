@@ -46,3 +46,35 @@ async function fetchDogs() {
         console.error('Error fetching dogs:', error);
     }
 }
+
+// Render dog cards
+async function renderDogs(dogIds) {
+    const dogList = document.getElementById('dog-list');
+    dogList.innerHTML = ''; // Clear previous results
+
+    if (dogIds.length === 0) {
+        dogList.innerHTML = '<p>No dogs found.</p>';
+        return;
+    }
+    const dogsResponse = await fetch('https://frontend-take-home-service.fetch.com/dogs', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dogIds),
+        credentials: 'include',
+    });
+    const dogs = await dogsResponse.json();
+
+    dogs.forEach(dog => {
+        const dogCard = document.createElement('div');
+        dogCard.className = 'dog-card';
+        dogCard.innerHTML = `
+            <img src="${dog.img}" alt="${dog.name}">
+            <h3>${dog.name}</h3>
+            <p>${dog.breed}, ${dog.age} years old</p>
+            <button onclick="addToFavorites('${dog.id}')">❤️ Favorite</button>
+        `;
+        dogList.appendChild(dogCard);
+    });
+}
