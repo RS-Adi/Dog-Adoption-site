@@ -111,3 +111,6 @@ document.getElementById('next-page').addEventListener('click', () => {
         fetchDogs();
     }
 });
+
+fetchBreeds();
+fetchDogs();
