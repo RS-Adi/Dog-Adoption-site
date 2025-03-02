@@ -78,3 +78,36 @@ async function renderDogs(dogIds) {
         dogList.appendChild(dogCard);
     });
 }
+    // Updating the pagination buttons and page info
+function updatePagination() {
+    document.getElementById('page-info').textContent = `Page ${currentPage} of ${totalPages}`;
+    document.getElementById('prev-page').disabled = currentPage === 1;
+    document.getElementById('next-page').disabled = currentPage === totalPages;
+}
+
+// Adding 'e' listeners for filters and pagination
+document.getElementById('breed-filter').addEventListener('change', (e) => {
+    currentFilters.breed = e.target.value || undefined;
+    currentPage = 1;
+    fetchDogs();
+});
+
+document.getElementById('sort').addEventListener('change', (e) => {
+    currentFilters.sort = e.target.value || undefined;
+    currentPage = 1;
+    fetchDogs();
+});
+
+document.getElementById('prev-page').addEventListener('click', () => {
+    if (currentPage > 1) {
+        currentPage--;
+        fetchDogs();
+    }
+});
+
+document.getElementById('next-page').addEventListener('click', () => {
+    if (currentPage < totalPages) {
+        currentPage++;
+        fetchDogs();
+    }
+});

@@ -87,7 +87,7 @@ button:hover{
     margin-top: 20px;
 }
 .pagination button {
-    padding: 5px 10px;
-    margin: 0 10px;
+    padding: 8px 15px;
+    margin: 1px 15px;
     cursor: pointer;
 }
