@@ -1,13 +1,14 @@
-body{
+body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0%;
+    padding: 0;
     display: flex;
     justify-content: center;
-    align-items: stretch;
-    height: 100vh;
+    align-items: flex-start; /* Align to the top */
+    min-height: 100vh; /* Use min-height instead of height */
     background-color: #f0f0f0;
 }
+
 .login-container {
     background-color: #fff;
     padding: 20px;
@@ -17,40 +18,46 @@ body{
     width: 350px; /* Adjust the width to make it smaller */
     height: auto; /* Auto height to adjust based on content */
     margin: auto; /* Center the container */
-    padding: 20px;
 }
-h1{
+
+h1 {
     color: #333;
     margin-bottom: 20px;
 }
-label{
+
+label {
     display: block;
     margin-bottom: 5px;
-    font-weight:  bold;
+    font-weight: bold;
 }
-input{
+
+input {
     width: 85%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-button{
+
+button {
     width: 25%;
     padding: 10px;
     background-color: #007bff;
-    color: #f0f0f0;
+    color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
-button:hover{
+
+button:hover {
     background-color: #0056b3;
 }
-.error-message{
+
+.error-message {
     color: red;
     margin-top: 10px;
 }
+
 .search-container {
     background-color: #fff;
     padding: 20px;
@@ -60,25 +67,29 @@ button:hover{
     width: 100%; /* Ensure it takes full width */
     margin: 20px; /* Add some margin for spacing */
     min-height: 50vh; /* Adjust as needed */
-
     overflow: visible; /* Ensure spacing isn't cut off */
 }
+
 .filters {
     margin-bottom: 20px;
 }
+
 .filters label {
     margin-right: 10px;
 }
+
 .filters select {
     padding: 5px;
     margin-right: 20px;
 }
+
 .dog-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* Consistent column width */
     gap: 20px;
     width: 100%; /* Ensure the grid takes full width */
 }
+
 .dog-card {
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -90,6 +101,7 @@ button:hover{
     justify-content: space-between;
     height: 100%;
 }
+
 .dog-card img {
     width: 95%; /* Ensure the image takes up the full width of the card */
     height: 190px; /* Set a fixed height for consistency */
@@ -98,12 +110,15 @@ button:hover{
     margin-top: 5px;
     margin-bottom: 1px;
 }
+
 .dog-card h3 {
     margin: 1px 0;
 }
+
 .dog-card p {
     margin: 1px 0;
 }
+
 .dog-card button {
     margin-top: 15px;
     padding: 3px;
@@ -114,15 +129,18 @@ button:hover{
     cursor: pointer;
     width: 30%;
 }
+
 .dog-card button:hover {
     background-color: #ff6b81;
 }
+
 .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 29px;
 }
+
 .pagination button {
     padding: 10px 15px;
     max-width: 85px;
@@ -132,6 +150,7 @@ button:hover{
     border: none;
     border-radius: 4px;
 }
+
 .pagination button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
@@ -148,6 +167,7 @@ button:hover{
     margin-top: 5px;
     text-align: center;
 }
+
 #view-favorites {
     padding: 10px 10px;
     background-color: #007bff;
@@ -156,6 +176,7 @@ button:hover{
     border-radius: 4px;
     cursor: pointer;
 }
+
 #view-favorites:hover {
     background-color: #0056b3;
 }
@@ -164,6 +185,7 @@ button:hover{
     padding: 15px;
     text-align: center;
 }
+
 #generate-match {
     padding: 10px 20px;
     background-color: #ff4757;
@@ -172,9 +194,11 @@ button:hover{
     border-radius: 4px;
     cursor: pointer;
 }
+
 #generate-match:hover {
     background-color: #ff6b81;
 }
+
 .matched-dog {
     background-color: #fff;
     padding: 20px;
@@ -216,24 +240,54 @@ button:hover{
     display: none; /* Hidden by default */
     position: absolute;
     top: 35px;
-    right: 35px;
+    right: 150px;
 }
 
 #back-button:hover {
     background-color: #5a6268; /* Slightly darker gray */
 }
-/*Media Queries*/
 
+/* Header styling */
+.header {
+    display: flex;
+    justify-content: space-between; /* Aligns title to left and logout button to right */
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Logout button styling */
+#logout-button {
+    padding: 10px 15px;
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#logout-button:hover {
+    background-color: #ff6b81;
+}
+
+/* Media Queries */
 @media (max-width: 1200px) {
     .dog-list {
         grid-template-columns: repeat(3, 1fr); /* 3 columns for medium screens */
     }
 }
+
 @media (max-width: 768px) {
     .dog-list {
         grid-template-columns: repeat(2, 1fr); /* 2 columns for small screens */
     }
 }
+
 @media (max-width: 480px) {
     .dog-list {
         grid-template-columns: 1fr; /* 1 column for very small screens */
