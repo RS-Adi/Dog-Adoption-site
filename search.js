@@ -120,6 +120,13 @@ function addToFavorites(dogId) {
     }
 }
 
+
+//To handle the match generator
+function displayMatch(dogId) {
+    fetchDogsByIds([dogId]); // Fetch and display the matched dog
+    alert('You’ve been matched with a dog! Check the list below.');
+}
+
 // Event listeners for filters and pagination
 document.getElementById('breed-filter').addEventListener('change', (e) => {
     currentFilters.breed = e.target.value || undefined;
@@ -150,9 +157,30 @@ document.getElementById('view-favorites').addEventListener('click', () => {
     if (favoritedDogs.length > 0) {
         fetchDogsByIds(favoritedDogs); // Fetch details of favorited dogs
     } else {
-        alert('You have no favorited dogs yet!');
+        alert('You have no favorite dogs yet!');
     }
 });
+document.getElementById('generate-match').addEventListener('click', async () => {
+    if (favoritedDogs.length > 0) {
+        try {
+            const response = await fetch('https://frontend-take-home-service.fetch.com/dogs/match', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(favoritedDogs),
+                credentials: 'include',
+            });
+            const match = await response.json();
+            displayMatch(match.match); // Display the matched dog
+        } catch (error) {
+            console.error('Error generating match:', error);
+        }
+    } else {
+        alert('Please favorite at least one dog to generate a match!');
+    }
+});
+
 
 
 
