@@ -1,7 +1,7 @@
 body{
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 10%;
+    padding: 0%;
     display: flex;
     justify-content: center;
     align-items: stretch;
@@ -53,7 +53,8 @@ button:hover{
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 1200px;
-    margin: 0 auto;
+    width: 100%; /* Ensure it takes full width */
+    margin: 20px; /* Add some margin for spacing */
 }
 .filters {
     margin-bottom: 20px;
@@ -67,7 +68,7 @@ button:hover{
 }
 .dog-list {
     display: grid;
-    grid-template-columns: repeat(minmax(4, 1fr)); /* Consistent column width */
+    grid-template-columns: repeat(4, 1fr); /* Consistent column width */
     gap: 20px;
     width: 100%; /* Ensure the grid takes full width */
 }
@@ -119,4 +120,22 @@ button:hover{
     padding: 8px 15px;
     margin: 1px 15px;
     cursor: pointer;
+}
+
+/*Media Queries*/
+
+@media (max-width: 1200px) {
+    .dog-list {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns for medium screens */
+    }
+}
+@media (max-width: 768px) {
+    .dog-list {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for small screens */
+    }
+}
+@media (max-width: 480px) {
+    .dog-list {
+        grid-template-columns: 1fr; /* 1 column for very small screens */
+    }
 }
