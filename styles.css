@@ -1,6 +1,6 @@
 body{
     font-family: Arial, sans-serif;
-    margin: 0;
+    margin: 0 0;
     padding: 0%;
     display: flex;
     justify-content: center;
@@ -138,6 +138,22 @@ button:hover{
     font-size: 1.2rem;
 }
 
+
+.favorites-section {
+    margin-top: 20px;
+    text-align: center;
+}
+#view-favorites {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#view-favorites:hover {
+    background-color: #0056b3;
+}
 /*Media Queries*/
 
 @media (max-width: 1200px) {

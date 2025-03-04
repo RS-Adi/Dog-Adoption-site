@@ -1,6 +1,7 @@
 let currentPage = 1;
 let totalPages = 1;
 let currentFilters = {};
+let favoritedDogs = [];
 
 // Fetch all breeds and populate the breed filter
 async function fetchBreeds() {
@@ -67,21 +68,56 @@ async function renderDogs(dogIds) {
     dogs.forEach(dog => {
         const dogCard = document.createElement('div');
         dogCard.className = 'dog-card';
+        const isFavorited = favoritedDogs.includes(dog.id);
         dogCard.innerHTML = `
             <img src="${dog.img}" alt="${dog.name}">
             <h3>${dog.name}</h3>
             <p>${dog.breed}, ${dog.age} years old</p>
-            <button onclick="addToFavorites('${dog.id}')">❤️</button>
+            <button onclick="addToFavorites('${dog.id}')" 
+                    style="${isFavorited ? 'background-color: #4CAF50;' : ''}" 
+                    ${isFavorited ? 'disabled' : ''}>
+                ${isFavorited ? '❤️' : '❤️'}
+            </button>
         `;
         dogList.appendChild(dogCard);
     });
 }
 
+//To see if the fav dog condition
+async function fetchDogsByIds(dogIds) {
+    try {
+        const response = await fetch('https://frontend-take-home-service.fetch.com/dogs', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dogIds),
+            credentials: 'include',
+        });
+        const dogs = await response.json();
+        renderDogs(dogIds); // Render the favorited dogs
+    } catch (error) {
+        console.error('Error fetching favorited dogs:', error);
+    }
+}
 // Update pagination buttons and page info
 function updatePagination() {
     document.getElementById('page-info').textContent = `Page ${currentPage} of ${totalPages}`;
     document.getElementById('prev-page').disabled = currentPage === 1;
     document.getElementById('next-page').disabled = currentPage === totalPages;
+}
+
+//Function to handle the favorite dog.
+function addToFavorites(dogId) {
+    if (!favoritedDogs.includes(dogId)) {
+        favoritedDogs.push(dogId);
+        const button = document.querySelector(`button[onclick="addToFavorites('${dogId}')"]`);
+        if (button) {
+            button.textContent = '❤️';
+            button.style.backgroundColor = '#4CAF50'; // Change color when favorited
+            button.disabled = true; // Disable the button after favoriting
+        }
+    }
 }
 
 // Event listeners for filters and pagination
@@ -110,6 +146,15 @@ document.getElementById('next-page').addEventListener('click', () => {
         fetchDogs();
     }
 });
+document.getElementById('view-favorites').addEventListener('click', () => {
+    if (favoritedDogs.length > 0) {
+        fetchDogsByIds(favoritedDogs); // Fetch details of favorited dogs
+    } else {
+        alert('You have no favorited dogs yet!');
+    }
+});
+
+
 
 // Initialize the page
 fetchBreeds();
