@@ -38,6 +38,22 @@
 
             <div class="match-section">
                 <button id="generate-match">Generate Match</button>
+                <div id="matched-dog" class="matched-dog" style="display: none;">
+                    <h2>Your Perfect Match</h2>
+                    <div id="matched-dog-info"></div>
+                </div>
+            </div>
+
+            <div class="favorites-section">
+                <button id="view-favorites">View Favorites</button>
+                <button id="back-button" style="display: none;">Back</button>
+            </div>
+            
+            <!-- Favorites Pagination Section -->
+            <div id="favorites-pagination" class="pagination" style="display: none;">
+                <button id="fav-prev-page" disabled>Previous</button>
+                <span id="fav-page-info">Page 1</span>
+                <button id="fav-next-page" disabled>Next</button>
             </div>
         </div>
         <script src="search.js"></script>

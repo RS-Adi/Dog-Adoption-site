@@ -8,12 +8,16 @@ body{
     height: 100vh;
     background-color: #f0f0f0;
 }
-.login-container{
-    background-color: #f0f0f0;
+.login-container {
+    background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    width: 350px; /* Adjust the width to make it smaller */
+    height: auto; /* Auto height to adjust based on content */
+    margin: auto; /* Center the container */
+    padding: 20px;
 }
 h1{
     color: #333;
@@ -103,7 +107,7 @@ button:hover{
 .dog-card button {
     margin-top: 15px;
     padding: 3px;
-    background-color: #478aff;
+    background-color: #2372fc;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -120,8 +124,8 @@ button:hover{
     margin-top: 29px;
 }
 .pagination button {
-    padding: 10px 5px;
-    margin: 25px 10px;
+    padding: 10px 15px;
+    max-width: 85px;
     cursor: pointer;
     background-color: #007bff;
     color: #fff;
@@ -132,7 +136,6 @@ button:hover{
     background-color: #ccc;
     cursor: not-allowed;
 }
-
 
 .error-message {
     color: red;
@@ -171,6 +174,53 @@ button:hover{
 }
 #generate-match:hover {
     background-color: #ff6b81;
+}
+.matched-dog {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    text-align: center;
+}
+
+.matched-dog h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.matched-dog .dog-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    max-width: 350px;
+    margin: auto;
+}
+
+.matched-dog img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+#back-button {
+    padding: 10px 15px;
+    max-width: 80px;
+    background-color: #0245fc74; /* Gray color */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 35px;
+    right: 35px;
+}
+
+#back-button:hover {
+    background-color: #5a6268; /* Slightly darker gray */
 }
 /*Media Queries*/
 
