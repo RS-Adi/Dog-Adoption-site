@@ -133,6 +133,29 @@ function renderDogs(dogIds) {
     .catch(error => console.error('Error fetching dogs:', error));
 }
 
+function showLoading() {
+    document.getElementById('loading').style.display = 'flex';
+}
+
+function hideLoading() {
+    document.getElementById('loading').style.display = 'none';
+}
+
+async function fetchDogs() {
+    showLoading(); // Show loading spinner
+    try {
+        const response = await fetch('https://frontend-take-home-service.fetch.com/dogs/search', {
+            credentials: 'include',
+        });
+        const data = await response.json();
+        renderDogs(data.resultIds);
+    } catch (error) {
+        console.error('Error fetching dogs:', error);
+    } finally {
+        hideLoading(); // Hide loading spinner
+    }
+}
+
     // Updating the pagination buttons and page info
 function updatePagination() {
     document.getElementById('page-info').textContent = `Page ${currentPage} of ${totalPages}`;
