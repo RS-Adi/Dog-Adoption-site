@@ -1,6 +1,7 @@
 let currentPage = 1;
 let totalPages = 1;
 let currentFilters = {};
+let favDog = [];
 
 //Fetch all the breeds and then populate the breed filter
 
@@ -78,6 +79,60 @@ async function renderDogs(dogIds) {
         dogList.appendChild(dogCard);
     });
 }
+
+function addToFavorites(dogId) {
+    if (!favDog.includes(dogId)) {
+        favDog.push(dogId);
+        const button = document.querySelector(`button[onclick="addToFavorites('${dogId}')"]`);
+        if (button) {
+            button.textContent = '❤️ Favorite';
+            button.style.backgroundColor = '#4CAF50';
+            button.disabled = true;
+        }
+    }
+}
+
+
+//When rendered, we have to check for fav's dogs exist or not
+function renderDogs(dogIds) {
+    const dogList = document.getElementById('dog-list');
+    dogList.innerHTML = ''; // Clear previous results
+
+    if (dogIds.length === 0) {
+        dogList.innerHTML = '<p>No dogs found.</p>';
+        return;
+    }
+
+    fetch('https://frontend-take-home-service.fetch.com/dogs', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dogIds),
+        credentials: 'include',
+    })
+    .then(response => response.json())
+    .then(dogs => {
+        dogs.forEach(dog => {
+            const dogCard = document.createElement('div');
+            dogCard.className = 'dog-card';
+            const isFavorited = favDog.includes(dog.id);
+            dogCard.innerHTML = `
+                <img src="${dog.img}" alt="${dog.name}">
+                <h3>${dog.name}</h3>
+                <p>${dog.breed}, ${dog.age} years old</p>
+                <button onclick="addToFavorites('${dog.id}')" 
+                        style="${isFavorited ? 'background-color: #4CAF50;' : ''}" 
+                        ${isFavorited ? 'disabled' : ''}>
+                    ${isFavorited ? '❤️ Favorite' : '❤️ Favorite'}
+                </button>
+            `;
+            dogList.appendChild(dogCard);
+        });
+    })
+    .catch(error => console.error('Error fetching dogs:', error));
+}
+
     // Updating the pagination buttons and page info
 function updatePagination() {
     document.getElementById('page-info').textContent = `Page ${currentPage} of ${totalPages}`;
