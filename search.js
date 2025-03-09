@@ -27,20 +27,18 @@ async function fetchBreeds() {
 async function fetchDogs() {
     const { breed, sort } = currentFilters;
     const url = new URL('https://frontend-take-home-service.fetch.com/dogs/search');
-    url.searchParams.set('size', 24);
+    url.searchParams.set('size', 24); // Fetch 24 dogs per page
     url.searchParams.set('from', (currentPage - 1) * 24);
 
     if (breed) url.searchParams.set('breeds', breed);
-
-    // Ensure results are sorted alphabetically by breed in ascending order
-    url.searchParams.set('sort', 'breed:asc'); // Force sorting A-Z
+    if (sort) url.searchParams.set('sort', sort); // Use the selected sort option
 
     try {
         const response = await fetch(url, {
             credentials: 'include',
         });
         const data = await response.json();
-        totalPages = Math.ceil(data.total / 25);
+        totalPages = Math.ceil(data.total / 24); // Use 24 to match the size parameter
         renderDogs(data.resultIds);
         updatePagination();
     } catch (error) {
@@ -76,26 +74,35 @@ async function renderDogs(dogIds) {
             <img src="${dog.img}" alt="${dog.name}">
             <h3>${dog.name}</h3>
             <p>${dog.breed}, ${dog.age} years old</p>
-            <button onclick="addToFavorites('${dog.id}')" 
+            <button onclick="toggleFavorite('${dog.id}')" 
                     style="${isFavorited ? 'background-color: #4CAF50;' : ''}" 
                     ${isFavorited ? 'disabled' : ''}>
-                ${isFavorited ? '❤️' : '❤️'}
+                ${isFavorited ? '❤️ Favorited' : '❤️'}
             </button>
         `;
         dogList.appendChild(dogCard);
     });
 }
 
-// Add a dog to favorites
-function addToFavorites(dogId) {
-    if (!favoritedDogs.includes(dogId)) {
+// Function to handle adding/removing favorites
+function toggleFavorite(dogId) {
+    const index = favoritedDogs.indexOf(dogId);
+
+    if (index === -1) {
+        // If the dog is not in favorites, add it
         favoritedDogs.push(dogId);
-        const button = document.querySelector(`button[onclick="addToFavorites('${dogId}')"]`);
-        if (button) {
-            button.textContent = '❤️';
-            button.style.backgroundColor = '#4CAF50';
-            button.disabled = true;
-        }
+    } else {
+        // If the dog is already in favorites, remove it
+        favoritedDogs.splice(index, 1);
+    }
+
+    // Re-render the list to update UI
+    if (document.getElementById('back-button').style.display === 'block') {
+        // If viewing favorites, re-render the favorites list
+        fetchDogsByIds(favoritedDogs);
+    } else {
+        // Otherwise, re-render the main dog list
+        fetchDogs();
     }
 }
 
@@ -137,6 +144,7 @@ document.getElementById('next-page').addEventListener('click', () => {
 document.getElementById('view-favorites').addEventListener('click', () => {
     if (favoritedDogs.length > 0) {
         fetchDogsByIds(favoritedDogs);
+        document.getElementById('back-button').style.display = 'block'; // Show Back button
     } else {
         alert('You have no favorited dogs yet!');
     }
@@ -154,7 +162,7 @@ async function fetchDogsByIds(dogIds) {
             credentials: 'include',
         });
         const dogs = await response.json();
-        renderDogs(dogIds);
+        renderDogs(dogIds); // Pass the fetched dogs
     } catch (error) {
         console.error('Error fetching favorited dogs:', error);
     }
@@ -185,7 +193,7 @@ document.getElementById('generate-match').addEventListener('click', async () => 
 // Display the matched dog
 function displayMatch(dogId) {
     fetchDogsByIds([dogId]);
-    alert('You’ve been matched with a dog! Check the list below.');
+    alert('You’ve been matched with a dog! Click OK to view.');
 }
 
 // Logout
@@ -208,6 +216,12 @@ document.getElementById('logout-button').addEventListener('click', async () => {
             console.error('Error during logout:', error);
         }
     }
+});
+
+// Back to Search
+document.getElementById('back-button').addEventListener('click', () => {
+    fetchDogs(); // Reloads the main dog listing
+    document.getElementById('back-button').style.display = 'none'; // Hide Back button
 });
 
 // Initialize the page with sorting applied
