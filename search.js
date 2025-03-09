@@ -24,21 +24,19 @@ async function fetchBreeds() {
 }
 
 // Fetch dogs based on filters and pagination
+
 async function fetchDogs() {
-    const { breed, sort } = currentFilters;
-    const url = new URL('https://frontend-take-home-service.fetch.com/dogs/search');
-    url.searchParams.set('size', 24); // Fetch 24 dogs per page
-    url.searchParams.set('from', (currentPage - 1) * 24);
-
-    if (breed) url.searchParams.set('breeds', breed);
-    if (sort) url.searchParams.set('sort', sort); // Use the selected sort option
-
     try {
-        const response = await fetch(url, {
-            credentials: 'include',
-        });
+        const url = new URL('https://frontend-take-home-service.fetch.com/dogs/search');
+        url.searchParams.set('size', 40);
+        url.searchParams.set('from', (currentPage - 1) * 40);
+
+        if (currentFilters.breed) url.searchParams.set('breeds', currentFilters.breed);
+        if (currentFilters.sort) url.searchParams.set('sort', currentFilters.sort);
+
+        const response = await fetch(url, { credentials: 'include' });
         const data = await response.json();
-        totalPages = Math.ceil(data.total / 24); // Use 24 to match the size parameter
+        totalPages = Math.ceil(data.total / 40);
         renderDogs(data.resultIds);
         updatePagination();
     } catch (error) {
@@ -66,6 +64,7 @@ async function renderDogs(dogIds) {
     });
     const dogs = await dogsResponse.json();
 
+    const fragment = document.createDocumentFragment(); // Use a document fragment
     dogs.forEach(dog => {
         const dogCard = document.createElement('div');
         dogCard.className = 'dog-card';
@@ -80,8 +79,9 @@ async function renderDogs(dogIds) {
                 ${isFavorited ? '❤️ Favorited' : '❤️'}
             </button>
         `;
-        dogList.appendChild(dogCard);
+        fragment.appendChild(dogCard);
     });
+    dogList.appendChild(fragment); // Append all cards at once
 }
 
 // Function to handle adding/removing favorites
